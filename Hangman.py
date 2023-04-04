@@ -65,6 +65,7 @@ def game():
     global no_failed_guesses
     global word_with_spaces
     no_failed_guesses = 0
+    image_label.config(image=photos[0])
 
     word = draw_word()
     word_with_spaces = " ".join(word)
@@ -73,7 +74,8 @@ def game():
     word_state.set(unders)
     # print("Wylosowano:", word)
 
-
+def enter_pressed(event):
+    guess()
 
 root = Tk()
 root.title('Hangman')
@@ -93,6 +95,9 @@ center_y = int(screen_height/2 - WINDOW_HEIGHT / 2)
 
 root.geometry(f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}+{center_x}+{center_y}')
 
+new_game_button = Button(root, text="New game", command=game)
+new_game_button.pack(ipadx=5, ipady=5, expand=True)
+
 image_label = Label(root)
 image_label.pack(expand=True)
 
@@ -107,6 +112,7 @@ letter_entry.focus()
 
 submit_button = Button(root, text="Submit", command=guess)
 submit_button.pack(ipadx=5, ipady=5, expand=True)
+root.bind("<Return>", enter_pressed)
 
 game()
 root.mainloop()
